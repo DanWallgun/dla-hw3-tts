@@ -9,3 +9,5 @@ wandb
 gdown
 unidecode
 scipy
+pyworld
+wandb
