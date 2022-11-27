@@ -1,0 +1,11 @@
+torch
+numpy
+scipy
+librosa
+inflect
+numba
+torchaudio
+wandb
+gdown
+unidecode
+scipy
