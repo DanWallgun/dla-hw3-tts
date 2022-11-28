@@ -1,4 +1,5 @@
 # DLA HW3 TTS project
+Можно проверить, что чекпойнт сохранён на google drive до дедлайна. Тренировки пока не останавливаю (интересно посмотреть, куда сойдутся), поэтому при проверке нужно не учитывать, что в логах wandb после дедлайна (но в целом там нечего учитывать, так что звучит не очень страшно).
 
 ## Installation guide
 Отдельные скрипты для тренировочного и тестового окружения:
@@ -17,21 +18,20 @@
 Для синтеза можно использовать `synthesize.py`, передавая путь к модели, тексты и variance-характеристики. По тексту и variance будет построено декартово произведение, для каждого его элемента (набора парамтеров) будет проведён синтез. Пример запуска можно увидеть в `scripts/synthesize.sh`.
 ```bash
 python synthesize.py \
-    --checkpoint-path="./model_new/current_model-state_dict-N.pth" \
+    --checkpoint-path="./trained.pth" \
     --text \
         "A defibrillator is a device that gives a high energy electric shock to the heart of someone who is in cardiac arrest" \
         "Massachusetts Institute of Technology may be best known for its math, science and engineering education" \
         "Wasserstein distance or Kantorovich Rubinstein metric is a distance function defined between probability distributions on a given metric space" \
     --duration-alpha 0.8 1.0 1.2 \
     --energy-alpha 0.8 1.0 1.2 \
-    --pitch-alpha 0.8 1.0 1.2
+    --pitch-alpha 0.8 1.0 1.2 \
+    --output-directory "results"
 ```
 
 ## Examples of synthesis
-Папка results, где используются тексты:
-1. A defibrillator is a device that gives a high energy electric shock to the heart of someone who is in cardiac arrest
-2. Massachusetts Institute of Technology may be best known for its math, science and engineering education
-3. Wasserstein distance or Kantorovich Rubinstein metric is a distance function defined between probability distributions on a given metric space
+Используется конфигурация из предыдущего пункта.  
+Удобно можно посмотреть на вейвформы и тексты на [wandb](https://wandb.ai/danwallgun/fastspeech_example/runs/1r77h48h).
 
 ## Report
 [wandb](https://wandb.ai/danwallgun/fastspeech_example/reports/DLA-HW2-TTS-Report--VmlldzozMDQ5NTY5)

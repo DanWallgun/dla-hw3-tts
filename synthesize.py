@@ -4,6 +4,9 @@ from itertools import chain, product
 
 import numpy as np
 import torch
+import wandb
+
+from scipy.io.wavfile import read
 
 import waveglow
 import text
@@ -37,6 +40,9 @@ def parse_args():
     text_group = parser.add_argument_group(title='Text')
     text_group.add_argument('--text', help='text to synthesize', required=False, type=str, nargs='*')
     text_group.add_argument('--text-file', help='path to file with texts to synthesize (each on own line)', required=False, type=str)
+    output_group = parser.add_argument_group(title='Output')
+    output_group.add_argument('--output-directory', default='results', required=False, type=str)
+    output_group.add_argument('--wandb-project', required=False, type=str)
     parser.add_argument('--checkpoint-path', required=True)
     args = parser.parse_args()
     assert all(x > 0 for x in chain(args.duration_alpha, args.energy_alpha, args.pitch_alpha))
@@ -69,11 +75,17 @@ if __name__ == '__main__':
     WaveGlow = WaveGlow.cuda()
 
     # synthesis
-    os.makedirs('results', exist_ok=True)
+    if args.wandb_project:
+        wandb.init(project=args.wandb_project)
+    os.makedirs(args.output_directory, exist_ok=True)
     for d, e, p in product(args.duration_alpha, args.energy_alpha, args.pitch_alpha):
         for index, text in enumerate(data_list):
+            filename = f'text{index + 1}_duration={d}_energy={e}_pitch={p}_waveglow.wav'
+            filepath = os.path.join(args.output_directory, filename)
+
             _, mel_cuda = synthesis(model, text, d, e, p)
-            waveglow.inference.inference(
-                mel_cuda, WaveGlow,
-                f'results/text{index + 1}_duration={d}_energy={e}_pitch={p}_waveglow.wav'
-            )
+            waveglow.inference.inference(mel_cuda, WaveGlow, filepath)
+
+            if args.wandb_project:
+                wandb.log({filename: wandb.Audio(filepath, caption=texts[index])})
+    
