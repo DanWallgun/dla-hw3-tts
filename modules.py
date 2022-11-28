@@ -397,6 +397,7 @@ class FastSpeech(nn.Module):
         # (-1.102636, 14.816711, -1.1665804636846395, 6.721676916626078)
         # (0.017866513, 314.9619, 0.0, 861.0652680139365)
         min_e, max_e, min_p, max_p = (0.017866513, 314.9619, 0.0, 861.0652680139365)
+        # min_e, max_e, min_p, max_p = (1e-5, 314.9619, 1e-5, 861.0652680139365)
         n_bins = 256
 
         self.encoder = Encoder(model_config)
@@ -407,6 +408,7 @@ class FastSpeech(nn.Module):
         self.energy_embedder = nn.Embedding(n_bins, model_config.encoder_dim)
         self.pitch_predictor = VarPredictor(model_config)
         self.pitch_bins = nn.Parameter(torch.linspace(min_p, max_p, n_bins - 1), requires_grad=False)
+        # self.pitch_bins = nn.Parameter(torch.exp(torch.linspace(np.log(min_p), np.log(max_p), n_bins - 1)), requires_grad=False)
         self.pitch_embedder = nn.Embedding(n_bins, model_config.encoder_dim)
         
         self.decoder = Decoder(model_config)
