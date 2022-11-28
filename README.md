@@ -1,4 +1,4 @@
-# DLA HW1 ASR project
+# DLA HW3 TTS project
 
 ## Installation guide
 Отдельные скрипты для тренировочного и тестового окружения:
