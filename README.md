@@ -14,6 +14,9 @@
 - Подсчет максимумов и минимумов `python preprocess.py calculate_min_max`
 - Нормализация `python preprocess.py normalize`
 
+## Train guide
+Можно поверить, что работает указать параметры в `configs.py` и запустить `python train.py`.
+
 ## Inference guide
 Для синтеза можно использовать `synthesize.py`, передавая путь к модели, тексты и variance-характеристики. По тексту и variance будет построено декартово произведение, для каждого его элемента (набора парамтеров) будет проведён синтез. Пример запуска можно увидеть в `scripts/synthesize.sh`.
 ```bash
