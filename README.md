@@ -4,7 +4,7 @@
 ## Installation guide
 Отдельные скрипты для тренировочного и тестового окружения:
 - `scripts/train_install.sh` (здесь есть загрузка LJSpeech и предподсчитанных характеристик)
-- `scripts/infer_install.sh` (здесь есть загрузка WaveGlow)
+- `scripts/infer_install.sh` (здесь есть загрузка WaveGlow и обученной fastspeech-модели)
 
 ## Preprocessing
 Везде используются параметры и пути из `configs.py`.
