@@ -11,3 +11,4 @@ torch
 torchaudio
 unidecode
 wandb
+hparams
